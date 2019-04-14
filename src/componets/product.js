@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
 
-class Products extends Component{ 
+class Products extends Component{
+    // constructor(props){
+    //     super(props);
+    //     this.Buy = this.Buy.bind(this);
+    // }
+    Buy = () => {
+        alert(this.props.name)
+    }
     render(){
         return (
-           <div>
-                <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <a href="#" className="thumbnail">
-                        <img src="http://file.vforum.vn/hinh/2015/12/hinh-anh-meo-de-thuong-nhat-qua-dat-58.jpg" alt="lol" />
-                        <div className="caption">
-                             <button type="button" class="btn btn-success">Buy</button> 
-                             <br />
-                             <p>100$</p>
-                        </div>
-                    </a>
-                        </div>
-                <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <a href="#" className="thumbnail">
-                        <img src="http://file.vforum.vn/hinh/2015/12/hinh-anh-meo-de-thuong-nhat-qua-dat-58.jpg" alt="lol" />           
-                        <div className="caption">
-                             <button type="button" class="btn btn-success">Buy</button> 
-                             <br />
-                             <p>100$</p>
-                        </div>    
-                    </a>
-                </div>    
-           </div>
+            
+            <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <a className="thumbnail">
+                    <img  alt="" />
+                </a>
+                <h2>Name:{this.props.name}</h2>
+                <p>Price:{this.props.price}</p>
+                
+                <button type="button" className="btn btn-info" onClick={this.Buy}>buy Now</button>
+                
+            </div>
+            
         )
     }
 }

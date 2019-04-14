@@ -1,64 +1,75 @@
 import React, { Component } from 'react';
 import './App.css';
+import Products from './componets/product'; 
 
 
 class App extends Component {
-  showProducts(products){
-    if(products.status){
-      return (
-        <h3>
-        id: {products.id}
-        <br />
-        name: { products.name}
-        <br />
-        price: {products.price}
-        <br />
-        status: { products.status ? 'active' : 'pending'}
-      </h3>
-      )
-    }
+  hadlingRefs = () => {
+    alert(this.refs.name.value);
   }
   render() {
-    const products = {
-      id:1,
-      name: 'durex',
-      price: 1809098,
-      status: false
-    }
-    var users = [
+    let product = [
       {
-        id:1,
-      name: 'durex',
-      price: 1809098,
-      status: false
+          id:1,
+          name:'sp1',
+          price: 100,
+          status: true
       },
       {
-        id:2,
-      name: 'xxx',
-      price: 1809098,
-      status: true
+          id:2,
+          name:'sp2',
+          price: 200,
+          status: true
       },
       {
-        id:3,
-      name: 'yyy',
-      price: 1809098,
-      status: false
+          id:3,
+          name:'sp3',
+          price: 300,
+          status: false
       }
-    ];
-    var elements = users.map((element, index) => {
-      return <h2 key= {index}>
-        id: {element.id},
-        name: {element.name},
-        price : {element.price},
-        status: {element.status ? 'active' : 'pending'}
-      </h2>
-    })
-    return (
-     <div>
-        {elements}
-     </div>
-    );
+  ]
+  let elements = product.map((e, index) => {
+  if(e.status){
+      return (
+        <Products 
+        key={index}
+        name={e.name}
+        price={e.price}
+        />
+      )
   }
+}   
+)
+
+    return (
+      
+   <div>  
+      <nav className="navbar navbar-inverse">
+        <a className="navbar-brand"> Props</a>
+        <ul className="nav navbar-nav">
+          <li className="active">
+            <a>Home</a>
+          </li>
+          <li>
+            <a>Link</a>
+          </li>
+        </ul>
+      </nav>
+      <div className="panel panel-default">
+       <div className="panel-body">
+          <input type='text' ref='name'/>
+          
+       </div>
+       <button type="button" className="btn btn-large btn-block btn-default" onClick={this.hadlingRefs}>Show</button>
+     </div>
+      <div className="container">
+        {elements}
+      </div>
+      
+   </div>    
+    )
+}
+
 }
 
 export default App;
