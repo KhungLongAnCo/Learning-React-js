@@ -31,8 +31,14 @@
     transform: rotate(360deg);
   }
 }
-.wrrap{
-  margin-top: 50px;
+.buttonTaskForm{
+  float:right;
 }
-
-
+.buttonIteamList{
+  float:right;
+}
+.iconFromTask{
+  float:right;
+  padding: 3px;
+  cursor:pointer;
+}
