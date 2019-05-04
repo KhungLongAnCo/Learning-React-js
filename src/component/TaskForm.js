@@ -12,11 +12,7 @@ class TaskForm extends Component {
 		}
 	}
 	closeForm = () =>{
-		this.setState({
-			name:'',
-			status:false
-		})
-		this.props.controlForm();
+		this.props.closeForm();
 	}
 	// get data from form 
 	changeData = (event) => {
@@ -37,10 +33,6 @@ class TaskForm extends Component {
 			name: '',
 			status: false
 		})
-	}
-	// click HUY BO close form and clear input
-	onClear = () =>{
-		this.closeForm();
 	}
 	// when form load componentWillMount will call and assign value for input and select
 	componentWillMount(){
@@ -75,10 +67,10 @@ class TaskForm extends Component {
 		render(){	
 			let id = this.state.id;
 				return (						 
-						<div className={id !== '' ? 'panel panel-danger' : 'panel panel-primary' }>
+						<div className={id ? 'panel panel-danger' : 'panel panel-primary' }>
 							<div className="panel-heading">
 								<h3 className="panel-title">
-									{id !== ''  ? 'Chỉnh sửa công việc' : 'Thêm công việc'} 
+									{id  ? 'Chỉnh sửa công việc' : 'Thêm công việc'} 
 									<span className="fas fa-times-circle iconFromTask" onClick={this.closeForm}>                         
 									</span>
 								</h3>
@@ -110,10 +102,10 @@ class TaskForm extends Component {
 									</div>        
 									<br />    
 									<div className="buttonTaskForm">
-									<button type="submit" className="btn btn-warning">{id !== ''  ? 'Sửa' : '+Lưu lại'}</button>                      
+									<button type="submit" className="btn btn-warning">{id ? 'Sửa' : '+Lưu lại'}</button>                      
 									<button type="button" 
 									className="btn btn-danger"
-									onClick={this.onClear}
+									onClick={this.closeForm}
 									>x Hủy bỏ</button>
 									</div>
 								</form>                  
@@ -132,6 +124,9 @@ const mapDispatchToProps = (dispatch, props) =>{
 	return {
 		onAddTask: (tasks) =>{ // name props
 			dispatch(actions.addTask(tasks)) // dispatch actions to reducer
+		},
+		closeForm: (id) => {
+			dispatch(actions.closeForm(id))
 		}
 	}
 }

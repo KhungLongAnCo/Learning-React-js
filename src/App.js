@@ -3,11 +3,13 @@ import './App.css';
 import TaskForm from './component/TaskForm';
 import Control from './component/Control';
 import TaskList from './component/TaskList';
+import { connect } from 'react-redux';
+import * as actions from './actions/index';
+
 class App extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			isDisplayForm:false,
 			itemModify:{
 
 			},
@@ -23,66 +25,9 @@ class App extends Component {
 		}
 	}
 	
-	// create short id
-	s4(){
-		let ids = require('short-id');
-		return ids.generate();
-	}
-	// Create new id
-	generateId = () =>{
-		return this.s4() + this.s4()+ '-' + this.s4() + this.s4() + '-' + this.s4()+ '-';
-	}
 	// displayForm 
 	displayForm = () => {
-		this.setState({
-			isDisplayForm: true,
-			itemModify: ''
-		})
-	}
-	// close Form 
-	closeForm = () =>{
-		this.setState({
-			isDisplayForm: false,
-			itemModify: ''
-		})
-	}
-	//get data from taskForm add Item
-	onSubmit = (data) =>{
-		if(data.status === 'true'){
-			data.status = true
-		}
-		if(data.status === 'false'){
-			data.status = false
-		}
-		var tasks = this.state.tasks;
-		if(data.id === ''){
-			data.id = this.generateId();
-			tasks.push(data);
-			this.setState({
-				tasks:tasks
-			})
-		}
-		else{
-			let index = this.findIndex(data.id);
-			tasks[index] = data;
-			this.setState({
-				tasks:tasks
-			})
-			this.closeForm();
-			
-		}	
-		localStorage.setItem('tasks', JSON.stringify(tasks));
-	}
-	
-
-	// update Status
-	updateStatus = (index) =>{
-		let tasks = this.state.tasks;
-		tasks[index].status = !tasks[index].status
-		this.setState({
-			tasks:tasks
-		})
-		localStorage.setItem('tasks', JSON.stringify(tasks));
+		this.props.openForm();
 	}
 	//remove item
 	removeItem = async (index) => {
@@ -94,17 +39,6 @@ class App extends Component {
 		localStorage.setItem('tasks', JSON.stringify(tasks));
 		// close form 
 		this.closeForm();
-	}
-	// find index theo id truyen vao
-	findIndex = (id) => {
-		var tasks = this.state.tasks;
-		var indextask = '';
-		tasks.forEach((item, index) => {
-			if(item.id === id){
-				indextask = index;
-			}
-		})
-		return indextask;
 	}
 	//show modify 
 	showModify = (index) => {
@@ -147,24 +81,22 @@ class App extends Component {
 	}
 
 		render(){	
-			let {isDisplayForm} = this.state;
+			let {isDisplayForm} = this.props;
 			let disPlayTaskForm ='';
-			let {filterList} = this.state;
-			let filterName = filterList.filterName;
-			let filterStatus = filterList.filterStatus;
-			let filterSentences = filterList.filterSentences;
-			let {Sort} = this.state;
+			// let {filterList} = this.state;
+			// let filterName = filterList.filterName;
+			// let filterStatus = filterList.filterStatus;
+			// let filterSentences = filterList.filterSentences;
+			// let {Sort} = this.state;
 			// show form 
 			if(isDisplayForm === true){
 				disPlayTaskForm = <TaskForm 
-				controlForm = {this.closeForm}
-				onSubmit={this.onSubmit} 
 				modifyItem = {this.state.itemModify	} 
 				getmodifyItem = {this.getmodifyItem}
 				 />
 			}
 			else{
-				disPlayTaskForm = '';
+				disPlayTaskForm =  '';
 			}
 
 			// FILTER
@@ -235,7 +167,6 @@ class App extends Component {
 							<div className="col-lg-12 col-md-12 col-xs-12">
 								<br />
 								<TaskList 
-								updateStatus = {this.updateStatus} 
 								removeItem = {this.removeItem}
 								showModify ={this.showModify}
 								filterList = {this.filterList}
@@ -247,4 +178,17 @@ class App extends Component {
 		}
 }
 
-export default App;
+const mapStateToProps = (state) => {
+	return {
+		isDisplayForm: state.displayForm
+	}
+}
+const mapDispatchToProps = (dispatch, props) => {
+	return {
+		openForm: () =>{
+			dispatch(actions.openForm())
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

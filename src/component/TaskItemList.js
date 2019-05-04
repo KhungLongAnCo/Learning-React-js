@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import * as actions from '../actions/index';
 
 class TaskItemList extends Component {
         updateStatus = () => {
-            this.props.updateStatus(this.props.index);
+            this.props.toggleStatus(this.props.item.id);
         }
         removeItem = () => {
             this.props.removeItem(this.props.index)
@@ -40,5 +42,17 @@ class TaskItemList extends Component {
 				)
 		}
 }
+const mapStateToProps = state => {
+    return {
 
-export default TaskItemList;
+    }
+}
+const mapDispatchToProps = (dispatch, props) =>{
+    return {
+        toggleStatus: (id) =>{
+            dispatch(actions.toggleStatus(id))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskItemList);

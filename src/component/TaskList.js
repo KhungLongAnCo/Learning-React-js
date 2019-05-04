@@ -30,7 +30,6 @@ class TaskList extends Component {
 				item={item} 
 				key={item.id}
 				index={index} 
-				updateStatus={this.props.updateStatus} 
 				removeItem ={this.props.removeItem}
 				showModify ={this.props.showModify}
 				/>
