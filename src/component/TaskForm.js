@@ -26,13 +26,13 @@ class TaskForm extends Component {
 	// pass data to app.js to create item and modify 
 	onSubmit = (event) =>{
 		event.preventDefault();
-		// this.props.onSubmit(this.state);
-		this.props.onAddTask(this.state);
+			this.props.onSave(this.state);
 		this.setState({
 			id: '',
 			name: '',
 			status: false
 		})
+		this.props.closeForm();
 	}
 	// when form load componentWillMount will call and assign value for input and select
 	componentWillMount(){
@@ -46,7 +46,6 @@ class TaskForm extends Component {
 		}
 	}
 	componentWillReceiveProps(nextProps){
-		// chuyen tu tao moi sang modify
 		if(nextProps && nextProps.modifyItem){
 			this.setState({
 			id: nextProps.modifyItem.id,
@@ -83,7 +82,7 @@ class TaskForm extends Component {
 										<label>Tên :</label>
 										<input type="text"
 										onChange={this.changeData} 
-										value={this.state.name} 
+										value={this.state.name ? this.state.name : ''}
 										id="nameWork"
 										name="name" 
 										className="form-control" />
@@ -117,13 +116,13 @@ class TaskForm extends Component {
 }
 const mapStateToProps = (state) => {
 	return {
-
+		modifyItem: state.editTask
 	}
 }
 const mapDispatchToProps = (dispatch, props) =>{
 	return {
-		onAddTask: (tasks) =>{ // name props
-			dispatch(actions.addTask(tasks)) // dispatch actions to reducer
+		onSave: (tasks) =>{ // name props
+			dispatch(actions.onSave(tasks)) // dispatch actions to reducer
 		},
 		closeForm: (id) => {
 			dispatch(actions.closeForm(id))

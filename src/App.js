@@ -10,9 +10,6 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			itemModify:{
-
-			},
 			filterList:{
 				filterName:'',
 				filterStatus: '',
@@ -28,31 +25,7 @@ class App extends Component {
 	// displayForm 
 	displayForm = () => {
 		this.props.openForm();
-	}
-	//remove item
-	removeItem = async (index) => {
-		let tasks = this.state.tasks;
-		tasks.splice(index, 1);
-		this.setState({
-			tasks:tasks
-		})
-		localStorage.setItem('tasks', JSON.stringify(tasks));
-		// close form 
-		this.closeForm();
-	}
-	//show modify 
-	showModify = (index) => {
-		let itemModify = this.state.tasks[index];
-		this.setState({
-			itemModify:itemModify
-		})	
-	
-		this.showModifyForm();
-	}
-	showModifyForm = () => {
-		this.setState({
-			isDisplayForm: true
-		})
+		this.props.onClearTask();
 	}
 	// filter data 
 	filterList = (name, status) => {
@@ -81,23 +54,14 @@ class App extends Component {
 	}
 
 		render(){	
-			let {isDisplayForm} = this.props;
-			let disPlayTaskForm ='';
+			let isDisplayForm = this.props.isDisplayForm === true ? <TaskForm 
+			 /> : '';
 			// let {filterList} = this.state;
 			// let filterName = filterList.filterName;
 			// let filterStatus = filterList.filterStatus;
 			// let filterSentences = filterList.filterSentences;
 			// let {Sort} = this.state;
 			// show form 
-			if(isDisplayForm === true){
-				disPlayTaskForm = <TaskForm 
-				modifyItem = {this.state.itemModify	} 
-				getmodifyItem = {this.getmodifyItem}
-				 />
-			}
-			else{
-				disPlayTaskForm =  '';
-			}
 
 			// FILTER
 			// filter by name
@@ -145,10 +109,10 @@ class App extends Component {
 						<hr />
 						<br />
 						<div className="col-lg-3 col-md-3 col-xs-3">
-							{ disPlayTaskForm }
+							{ isDisplayForm }
 						</div>
 						<div 
-						className={isDisplayForm === false ? 'col-lg-12 col-md-12 col-xs-12' : 'col-lg-9 col-md-9 col-xs-9'}
+						className={isDisplayForm ? 'col-lg-9 col-md-9 col-xs-9' : 'col-lg-12 col-md-12 col-xs-12' }
 						>
 							<div className="col-md-12">              
 								<button type="button" 
@@ -167,8 +131,6 @@ class App extends Component {
 							<div className="col-lg-12 col-md-12 col-xs-12">
 								<br />
 								<TaskList 
-								removeItem = {this.removeItem}
-								showModify ={this.showModify}
 								filterList = {this.filterList}
 								/>
 							</div>   
@@ -187,6 +149,9 @@ const mapDispatchToProps = (dispatch, props) => {
 	return {
 		openForm: () =>{
 			dispatch(actions.openForm())
+		},
+		onClearTask: () => {
+			dispatch(actions.editTask());
 		}
 	}
 }

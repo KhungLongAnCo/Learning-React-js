@@ -30,8 +30,6 @@ class TaskList extends Component {
 				item={item} 
 				key={item.id}
 				index={index} 
-				removeItem ={this.props.removeItem}
-				showModify ={this.props.showModify}
 				/>
 			})	
 				return (					

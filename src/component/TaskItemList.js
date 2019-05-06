@@ -6,11 +6,13 @@ class TaskItemList extends Component {
         updateStatus = () => {
             this.props.toggleStatus(this.props.item.id);
         }
-        removeItem = () => {
-            this.props.removeItem(this.props.index)
+        deleteItem = () => {
+            this.props.deleteItem(this.props.item.id);
+            this.props.closeForm();
         }
-        showModify = () => {
-            this.props.showModify(this.props.index);
+        showEditTask = () => {
+            this.props.openForm();
+            this.props.editTask(this.props.item);
         }
 		render(){	
             var tasks = this.props;
@@ -28,13 +30,13 @@ class TaskItemList extends Component {
                         <td>
                             <button type="button" 
                             className="btn btn-warning"
-                            onClick={this.showModify}
+                            onClick={this.showEditTask}
                             >
                                 <i className="fas fa-wrench"></i> Sửa
                             </button>
                             <button type="button" 
                             className="btn btn-danger"
-                            onClick={this.removeItem}>
+                            onClick={this.deleteItem}>
                                 <i className="fas fa-trash-alt"></i> Xóa
                             </button>
                         </td>
@@ -51,6 +53,18 @@ const mapDispatchToProps = (dispatch, props) =>{
     return {
         toggleStatus: (id) =>{
             dispatch(actions.toggleStatus(id))
+        },
+        deleteItem : (id) => {
+            dispatch(actions.deleteItem(id))
+        },
+        closeForm: () => {
+            dispatch(actions.closeForm());
+        },
+        openForm: () => {
+            dispatch(actions.openForm());
+        },
+        editTask : (task) =>{
+            dispatch(actions.editTask(task));
         }
     }
 }
