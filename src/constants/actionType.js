@@ -5,3 +5,5 @@ export const closeForm = 'closeForm';
 export const toggleStatus = 'toggleStatus';
 export const deleteItem = 'deleteItem';
 export const EDIT_TASK = 'EDIT_TASK';
+export const search_task = 'search_task';
+export const SORT_TASK = 'SORT_TASK';

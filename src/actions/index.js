@@ -39,3 +39,15 @@ export const editTask = (task) => {
         task: task
     }
 }
+export const search_task = (search) => {
+    return {
+        type: types.search_task,
+        search
+    }
+}
+export const Sort = (sortBy) => {
+    return {
+        type: types.SORT_TASK,
+        sortBy
+    }
+}

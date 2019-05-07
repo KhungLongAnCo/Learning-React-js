@@ -10,15 +10,6 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			filterList:{
-				filterName:'',
-				filterStatus: '',
-				filterSentences: ''
-			},
-			Sort:{
-				by:'',
-				value:''
-			}
 		}
 	}
 	
@@ -27,82 +18,11 @@ class App extends Component {
 		this.props.openForm();
 		this.props.onClearTask();
 	}
-	// filter data 
-	filterList = (name, status) => {
-		this.setState({
-			filterList:{
-				filterName: name,
-				filterStatus: status,
-				filterSentences: ''
-			}
-		})
-	}
-	filterSentences = (data) => {
-		this.setState({
-			filterList:{
-				filterSentences: data
-			}
-		})
-	}
-	SortList = (by, value) =>{
-		this.setState({
-			Sort:{
-				by:by,
-				value:value
-			}
-		})
-	}
-
 		render(){	
 			let isDisplayForm = this.props.isDisplayForm === true ? <TaskForm 
 			 /> : '';
-			// let {filterList} = this.state;
-			// let filterName = filterList.filterName;
-			// let filterStatus = filterList.filterStatus;
-			// let filterSentences = filterList.filterSentences;
-			// let {Sort} = this.state;
-			// show form 
 
-			// FILTER
-			// filter by name
-			// if(filterName){
-			// 	tasks = tasks.filter((task) => {
-			// 		return task.name.toLowerCase().indexOf(filterName) >= 0;
-			// 	})
-			// }
-			// // filter status
-			// if(filterStatus === 'active'){
-			// 	tasks = tasks.filter((task) => {
-			// 		return task.status === true
-			// 	})
-			// }
-			// if(filterStatus === 'complete'){
-			// 	tasks = tasks.filter((task) => {
-			// 		return task.status === false
-			// 	})
-			// }
-			// // filter Sentences
-			// if(filterSentences){
-			// 	tasks = tasks.filter((task) => {
-			// 		return task.name.indexOf(filterSentences) !== -1;
-			// 	})
-			// }
-			// // sort by name A- Z
-			// if(Sort.by === 'name' && Sort.value === 1){
-			// 	tasks = tasks.sort(function(a, b){
-			// 		if(a.name < b.name){ return -1;}
-			// 		if(a.name > b.name){ return 1;}
-			// 		return 0;
-			// 	})
-			// }
-			// // sort by name Z-A
-			// if(Sort.by === 'name' && Sort.value === -1){
-			// 	tasks = tasks.sort(function(a, b){
-			// 		if(a.name > b.name){ return -1;}
-			// 		if(a.name < b.name){ return 1;}
-			// 		return 0;
-			// 	})
-			// }
+			
 				return (					
 					<div className="container ">
 						<h1 className="text-center">Quản lý công việc</h1>
@@ -124,15 +44,11 @@ class App extends Component {
 								<br />
 								<br />        
 							</div>
-							<Control filterSentences = {this.filterSentences}
-								SortList = {this.SortList}
-							/>   
+							<Control />   
 							
 							<div className="col-lg-12 col-md-12 col-xs-12">
 								<br />
-								<TaskList 
-								filterList = {this.filterList}
-								/>
+								<TaskList  />
 							</div>   
 						</div>					
 					</div>

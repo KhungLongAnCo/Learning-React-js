@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import {connect} from 'react-redux';
+import * as actions from '../actions/index';
 
 class Sort extends Component {
 	constructor(props){
@@ -9,12 +10,12 @@ class Sort extends Component {
 			value:''
 		}
 	}
-	SortList = (by, value) =>{
+	SortTask = (by, value) =>{
 		this.setState({
 			by:by,
 			value:value
 		})
-		this.props.SortList(by, value);
+		this.props.SortTask({by, value});
 	}
 
 
@@ -32,11 +33,11 @@ class Sort extends Component {
 							className="btn btn-primary dropdown-menu"	
 							id="menuSort"						
 							 required="required">
-								<li  onClick={() => this.SortList('name', 1)} >
+								<li  onClick={() => this.SortTask('name', 1)} >
 								Theo tên A-Z &nbsp; &nbsp;
 								<i className={(by === 'name' && value === 1) ? 'fas fa-check' : ''}></i>
 								</li>
-								<li  onClick={() => this.SortList('name', -1)} >
+								<li  onClick={() => this.SortTask('name', -1)} >
 								Theo tên Z-A &nbsp; &nbsp;
 								<i className={(by === 'name' && value === -1) ? 'fas fa-check' : ''}></i>
 								</li>
@@ -46,4 +47,12 @@ class Sort extends Component {
 		}
 }
 
-export default Sort;
+const mapDispatchToProps = (dispatch, props) =>{
+	return {
+		SortTask: (sortBy) =>{
+			dispatch(actions.Sort(sortBy));
+		}
+	}
+}
+
+export default connect(null, mapDispatchToProps)(Sort);

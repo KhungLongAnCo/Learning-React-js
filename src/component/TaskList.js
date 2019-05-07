@@ -11,20 +11,58 @@ class TaskList extends Component {
 		}
 	}
 	onChange = (event) =>{
+
 		let target = event.target;
 		let name = target.name;
 		let value = target.value;
 		this.setState({
 			[name]: value
 		})
-		this.props.filterList(
-			name === 'filterName' ? value : this.state.filterName,
-			name === 'filterStatus' ? value : this.state.filterStatus
-		);
-		
 	}
 		render(){
-			let {tasks} = this.props;
+			let {tasks, filterSentences, Sort} = this.props;
+			let {filterName, filterStatus} = this.state;
+			// FILTER
+			// filter by name
+			if(filterName){
+				tasks = tasks.filter((task) => {
+					return task.name.toLowerCase().indexOf(filterName) >= 0;
+				})
+			}
+			// filter status
+			if(filterStatus === 'active'){
+				tasks = tasks.filter((task) => {
+					return task.status === true
+				})
+			}
+			if(filterStatus === 'complete'){
+				tasks = tasks.filter((task) => {
+					return task.status === false
+				})
+			}
+			// // filter Sentences
+			if(filterSentences){
+				tasks = tasks.filter((task) => {
+					return task.name.indexOf(filterSentences) !== -1;
+				})
+			}
+			// sort by name A- Z
+			if(Sort.by === 'name' && Sort.value === 1){
+				tasks = tasks.sort(function(a, b){
+					if(a.name < b.name){ return -1;}
+					if(a.name > b.name){ return 1;}
+					return 0;
+				})
+			}
+			// sort by name Z-A
+			if(Sort.by === 'name' && Sort.value === -1){
+				tasks = tasks.sort(function(a, b){
+					if(a.name > b.name){ return -1;}
+					if(a.name < b.name){ return 1;}
+					return 0;
+				})
+			}
+			
 			var ListItem = tasks.map((item, index) => {
 				return <TaskItemList 
 				item={item} 
@@ -32,8 +70,7 @@ class TaskList extends Component {
 				index={index} 
 				/>
 			})	
-				return (					
-					           
+				return (										           
 						<table className="table table-bordered table-hover">
 							<thead>
 								<tr>
@@ -51,7 +88,7 @@ class TaskList extends Component {
 										className="form-control" 
 										
 										name = 'filterName'
-										value = {this.state.filterName}	
+										value = {this.state.name}	
 										onChange={this.onChange}										
 										/>
 									</td>
@@ -59,7 +96,7 @@ class TaskList extends Component {
 										<select
 										onChange={this.onChange}	
 										name = 'filterStatus'
-										value = {this.state.filterStatus}
+										value = {this.state.status}
 										>
 											<option value ='all'>
 												Tất cả
@@ -86,8 +123,14 @@ class TaskList extends Component {
 }
 const mapStatetoProps = (state) => {
 	return {
-		tasks: state.tasks
+		filterSentences: state.searching.sentences,
+		tasks: state.tasks,
+		Sort : state.SortTask
 	}
 }
+const mapDispatchToProps = (dispatch, props) =>{
+	return {
+	}	
+}
 
-export default connect(mapStatetoProps, null)(TaskList);
+export default connect(mapStatetoProps, mapDispatchToProps)(TaskList);
