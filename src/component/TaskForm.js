@@ -8,7 +8,7 @@ class TaskForm extends Component {
 		this.state = {
 			id: '',
 			name:'',
-			status: false
+			status: true
 		}
 	}
 	closeForm = () =>{
@@ -22,11 +22,16 @@ class TaskForm extends Component {
 		this.setState({
 			[name]: value
 		})
+
 	}
 	// pass data to app.js to create item and modify 
 	onSubmit = (event) =>{
 		event.preventDefault();
-			this.props.onSave(this.state);
+			this.props.onSave({
+				id: this.state.id,
+				name: this.state.name,
+				status: this.state.status ? this.state.status : true
+			});
 		this.setState({
 			id: '',
 			name: '',
@@ -89,9 +94,8 @@ class TaskForm extends Component {
 										<label>Trang Thái :</label>
 										<br />                        
 										<select 
-										onChange={this.changeData} 
+										onChange = {this.changeData}
 										value={this.state.status} 
-										id="status"
 										name='status' 
 										className="form-control" 
 										required="required">

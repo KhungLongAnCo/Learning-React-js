@@ -28,12 +28,17 @@ let myReducer = (state = initialState, action) => {
         case types.onSave :
             if(action.tasks.id){
                 let indexEdit =  findIndex(state, action.tasks.id);
-                state[indexEdit] = action.tasks;
+                let tasksModify = {
+                    id:action.tasks.id,
+                    name:action.tasks.name,
+                    status:action.tasks.status === 'true' ? true : false
+                }
+                state[indexEdit] = tasksModify;
             }else{
                 let newTask = {
                     id:generateId(),
                     name: action.tasks.name,
-                    status: action.tasks.status === 'true' ? true : false
+                    status: action.tasks.status
                 }
                 state.push(newTask);
             }
