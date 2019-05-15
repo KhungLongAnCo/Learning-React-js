@@ -22,11 +22,11 @@ class App extends Component {
 						<h1 className="text-center">Quản lý công việc</h1>
 						<hr />
 						<br />
-						<div className="col-lg-3 col-md-3 col-xs-3">
+						<div className="col-lg-3 col-md-6 col-xs-12">
 							{ isDisplayForm }
 						</div>
 						<div 
-						className={isDisplayForm ? 'col-lg-9 col-md-9 col-xs-9' : 'col-lg-12 col-md-12 col-xs-12' }
+						className={isDisplayForm ? 'col-lg-9 col-md-6 col-xs-12' : 'col-lg-12 col-md-12 col-xs-12' }
 						>
 							<div className="col-md-12">              
 								<button type="button" 
